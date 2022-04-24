@@ -3,11 +3,20 @@ var nroPerPage = 10;
 var actualPages = 1;
 //
 
-const GetPokemonUrl = id => `https://pokeapi.co/api/v2/pokemon/${id}`
+const GetPokemonUrl = id => `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=${id}`
+
+const Pokemonteste = fetch(GetPokemonUrl(1)).then(response => response.json());
+console.log(Pokemonteste)
+
+
+/* const generatePokemonPromises = () => 
+Array(150).fill().map((_, index) => 
+fetch(GetPokemonUrl(index + 1)).then(response => response.json())) */
 
 const generatePokemonPromises = () => 
-Array(150).fill().map((_, index) => 
-fetch(GetPokemonUrl(index + 1)).then(response => response.json()))
+    Array(150).fill().map((_, index) => 
+        fetch(GetPokemonUrl(index + 1))
+            .then(response => response.json()))
 
 const generatePokeArrays = pokemons => {
     const pokeArrays =  pokemons.map((pokemon) => {
