@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>PokeDex</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./indicators.css" />
+  <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="container">
+    <h1>Pokedex</h1>
+    <div class="buttons-container">
+      <button id="recuar"> << </button>
+      <button id="avancar"> >> </button> </button>
+      <nav id="pages-lista">
+        <snavan id="first-page" class="element-page-style">1</snavan>
+        <span>...</span>
+        <span id="2-page-back" class="element-page-style">0</span>
+        <span id="1-page-back" class="element-page-style">0</span>
+        <span id="actual-page" class="element-page-style">3</span>
+        <span id="1-page-front" class="element-page-style">0</span>
+        <span id="2-page-front" class="element-page-style">0</span>
+        <span>...</span>
+        <span id="last-page" class="element-page-style">15</span>
+      </nav>
+    </div>
+    <ul data-js="pokedex" class="pokedex"></ul>
+  </div>
+  
+  <script src="./app.js"></script>
+</body>
+</html>
