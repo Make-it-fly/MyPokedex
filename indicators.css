@@ -6,7 +6,7 @@ i{
     margin: 15px auto;
     text-align: center;
 }
-button{
+.btn{
     margin: 0 7px;
     border: #FFFFFF 3px solid;
     height: 70px;
@@ -29,8 +29,9 @@ button:hover{
     background-color: white;
     padding: 5px;
     border-radius: 15px;
-    max-width: 80%;
+    max-width: 40%;
     margin: 15px auto;
+    box-sizing: border-box;
 }
 #pages-lista .element-page-style{
     border: #4BAB94 2px solid;
@@ -51,4 +52,45 @@ button:hover{
 #pages-lista #actual-page{
     background-color: #4BAB94;
     color: white;
+}
+.search-tab{
+    color: #263a35;
+    background-color: white;
+    padding: 10px;
+    border-radius: 15px;
+    max-width: 40%;
+    margin: 15px auto;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.search-tab i{
+    font-size: 26px;
+    color: #4BAB94;
+}
+.search-btn{
+    border: 1px solid #4BAB94;
+    border-radius: 15px;
+    background-color: #4BAB94;
+    color: white;
+    font-size: 1.1em;
+    padding: 5px 15px;
+    transition: .3s;
+}
+.search-btn:hover{
+    background-color: #FFFFFF;
+    color: #4BAB94;
+}
+.search-tab textarea{
+    resize: none;
+    border: 1px solid #4BAB94;
+    border-radius: 15px;
+    min-width: 200px;
+    width: 20%;
+    max-width: 600px;
+    height: 1em;
+    padding: 10px;
 }

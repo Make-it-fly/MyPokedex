@@ -44,7 +44,12 @@ h1 {
   top: 15%;
   left: 25%;
 }
-
+.dark{
+	background-color: #c8c8d3;
+}
+.ghost {
+	background-color: #d5aaff;
+}
 .steel {
 	background-color: #f4f4f4;
 }

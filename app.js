@@ -1,78 +1,82 @@
-//Nro da página
-var nroPerPage = 10;
-var actualPages = 1;
-//
+// OK requisitar e tratar os dados da API
+// percorrer a array = nroperpage
+// guardo os dados percorridos em uma variavel
+// percorrer os dados da variavel
+// chama função que percorre o array de itens chamando a cada interação a função que cria lis 
+// transformar os dados da variavel em HTML
 
-const GetPokemonUrl = id => `https://pokeapi.co/api/v2/pokemon/?offset=0&limit=${id}`
-
-const Pokemonteste = fetch(GetPokemonUrl(1)).then(response => response.json());
-console.log(Pokemonteste)
+let actualPages = 1; 
+let nroPerPage = 30;
 
 
-/* const generatePokemonPromises = () => 
-Array(150).fill().map((_, index) => 
-fetch(GetPokemonUrl(index + 1)).then(response => response.json())) */
+async function getApiData(url){
+    let response = await fetch(url);
+    let dados = await response.json();
+    return dados;
+}
 
-const generatePokemonPromises = () => 
-    Array(150).fill().map((_, index) => 
-        fetch(GetPokemonUrl(index + 1))
-            .then(response => response.json()))
+const getPokemonsDataPerPage = async (actualPages, nroPerPage) => {
+    let limiteInferiorDaPagina = ((actualPages * nroPerPage) - nroPerPage)
+    /* let limiteSuperiorDaPagina = (actualPages * nroPerPage) */
+    const url = `https://pokeapi.co/api/v2/pokemon/?offset=${limiteInferiorDaPagina}&limit=${nroPerPage}`
+    const dados = await getApiData(url);
+    const promisesPokemons = dados.results.map( async (element)=>{
+        return await getApiData(element.url);
+    })
+    const dadosPokemons = await Promise.all(promisesPokemons)
+    criaHTML(dadosPokemons);
+}
 
-const generatePokeArrays = pokemons => {
-    const pokeArrays =  pokemons.map((pokemon) => {
-    
-        const types = pokemon.types.map(typeInfo => typeInfo.type.name);
-        
-        const elemento = `
+function criaHTML(dadosPokemons){
+    // cria a array de lis
+    const liArrays = dadosPokemons.map(elemento => preencheHTML(elemento))
+    const $pokedex = document.querySelector('[data-js="pokedex"]')
+    $pokedex.innerHTML = liArrays.join('');
+
+}
+function getPokemonTypes(types){
+    return types.map((type)=>{
+        return type.type.name;
+    })
+}
+
+function preencheHTML(pokemon){
+    const types = getPokemonTypes(pokemon.types);
+
+    const liTemplate =
+    `
         <li class="card ${types[0]}">
         <img class="card-image" alt="${pokemon.name}" src="${pokemon.sprites.front_default}"/>
         <h2 class="card-title">${pokemon.id}. ${pokemon.name}</h2>
         <p class="card-subtitle">${types.join(' | ')}</p>
         </li>
-        `
-        return elemento
-    })
-    return pokeArrays
-}
-//criar uma função que remove os 10 primeiros index das arrays e revela os 10 próximos
-//adicionar eventos em botões
+     `
+    return liTemplate
 
-
-const pokeArraysToHtml = (pokeArrays) => {
-    return pokeArrays.join('')
-}
-const selectActualPokemons = (pokemons) => {
-
-    var newPokemonList = [];
-    for(var i=((actualPages * nroPerPage) - 10); i<(actualPages * nroPerPage); i++){
-        newPokemonList.push(pokemons[i]);
-    }
-    return newPokemonList;
-}
-const insertPokemonsIntoPage = pokemons => {
-    const $ul = document.querySelector('[data-js="pokedex"]')
-    const actualLenght = selectActualPokemons(pokemons);
-    const generatedHTML = pokeArraysToHtml(actualLenght);
-    $ul.innerHTML = generatedHTML;
-}
-const applyDataOnPage = () => {
-    Promises.then(generatePokeArrays)
-    .then(insertPokemonsIntoPage)
 }
 
-const Promises = Promise.all(generatePokemonPromises())
-applyDataOnPage();
-
-
+await getPokemonsDataPerPage(actualPages,nroPerPage);
+applyButtonsEvent()
 // :: Config dos Botões para mudar de página ::
 
-const buttonDesignate = () => {
-    const $btnRecuar = document.getElementById('recuar');
-    const $btnAvancar = document.getElementById('avancar');
-
-    $btnAvancar.addEventListener('click',alteratePageNumber);
-    $btnRecuar.addEventListener('click',alteratePageNumber);
-    
+function applyButtonsEvent(){
+    const $buttonsContainer = document.querySelector('.buttons-container'); 
+    $buttonsContainer.addEventListener('click', resolveNavClickEvent);
+}   
+function resolveNavClickEvent(e){
+    if(e.target.classList[0] == 'btn'){
+        alteratePageNumberValues(e.target.classList[1])
+    }
+}
+async function alteratePageNumberValues(classType){
+    if(classType == 'avancar' && (actualPages * nroPerPage) <= 1126){
+        actualPages += 1;
+        await getPokemonsDataPerPage(actualPages,nroPerPage);
+    }
+    if(classType == 'recuar' && !(actualPages == 1)){
+        actualPages -= 1;
+        await getPokemonsDataPerPage(actualPages,nroPerPage);
+    }
 }
 
 const alteratePageNumber = (e) => {
@@ -88,12 +92,11 @@ const alteratePageNumber = (e) => {
     applyDataOnPage()
 }
 
-buttonDesignate();
 
 // :: Config da lista de pags ::
 
 //definindo cada botão e nav
-const $navPageBtns = document.getElementById('pages-lista')
+/* const $navPageBtns = document.getElementById('pages-lista')
 
 const $firstPage = document.getElementById('first-page');
 const $lastPage = document.getElementById('last-page');
@@ -106,12 +109,9 @@ const $2PageFront = document.getElementById('2-page-front');
 
 $actualPage.innerText = actualPages;
 
-//associar evento
 $navPageBtns.addEventListener('click', navegarValoresBtn)
 
-//gerar valores nos botões
 const atualizarValoresBtn = () => {
-    /* debugger */
     $actualPage.innerText = actualPages;
 
     if(actualPages >= 3){
@@ -141,7 +141,6 @@ const atualizarValoresBtn = () => {
 
 }
 function navegarValoresBtn(e){
-    /* debugger */
     var target = e.target;
     console.log(target)
     if(target.className == "element-page-style"){
@@ -151,4 +150,4 @@ function navegarValoresBtn(e){
     applyDataOnPage();
 }
 
-atualizarValoresBtn();
+atualizarValoresBtn(); */

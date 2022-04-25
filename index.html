@@ -12,8 +12,8 @@
   <div class="container">
     <h1>Pokedex</h1>
     <div class="buttons-container">
-      <button id="recuar"> <i class="fa-solid fa-arrow-left"></i> </button>
-      <button id="avancar"> <i class="fa-solid fa-arrow-right"></i> </button> </button>
+      <button class="btn recuar"> <i class="fa-solid fa-arrow-left"></i> </button=>
+      <button class="btn avancar"> <i class="fa-solid fa-arrow-right"></i> </button> </button>
       <nav id="pages-lista">
         <snavan id="first-page" class="element-page-style">1</snavan>
         <span>...</span>
@@ -23,13 +23,18 @@
         <span id="1-page-front" class="element-page-style">0</span>
         <span id="2-page-front" class="element-page-style">0</span>
         <span>...</span>
-        <span id="last-page" class="element-page-style">15</span>
+        <span id="last-page" class="element-page-style">38</span>
       </nav>
+    </div>
+    <div class="search-tab">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <textarea placeholder="Pesquise seu pokemon!"></textarea>
+      <button class="search-btn">Procurar</button>
     </div>
     <ul data-js="pokedex" class="pokedex"></ul>
   </div>
   
-  <script src="./app.js"></script>
+  <script src="./app.js" type="module"></script>
   <script src="https://kit.fontawesome.com/0672e7305c.js" crossorigin="anonymous"></script>
 </body>
 </html>
