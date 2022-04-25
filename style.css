@@ -152,3 +152,10 @@ h1 {
 			transform: translateY(0);
 	}
 }
+@media screen and (max-width: 600px){
+    .container {
+		padding: 10px;
+		box-sizing: border-box;
+	}
+    
+}

@@ -6,7 +6,7 @@
 // transformar os dados da variavel em HTML
 
 let actualPages = 1; 
-let nroPerPage = 30;
+let nroPerPage = 150;
 
 
 async function getApiData(url){
@@ -78,20 +78,6 @@ async function alteratePageNumberValues(classType){
         await getPokemonsDataPerPage(actualPages,nroPerPage);
     }
 }
-
-const alteratePageNumber = (e) => {
-    const idValue = e.target.attributes.id.value;
-    
-    if(idValue == 'avancar' && !(actualPages == 15)){
-        actualPages += 1;
-    }
-    if (idValue == 'recuar' && !(actualPages == 1)) {
-        actualPages -= 1;
-    }
-    atualizarValoresBtn()
-    applyDataOnPage()
-}
-
 
 // :: Config da lista de pags ::
 

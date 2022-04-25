@@ -29,7 +29,7 @@ button:hover{
     background-color: white;
     padding: 5px;
     border-radius: 15px;
-    max-width: 40%;
+    max-width: 750px;
     margin: 15px auto;
     box-sizing: border-box;
 }
@@ -58,7 +58,7 @@ button:hover{
     background-color: white;
     padding: 10px;
     border-radius: 15px;
-    max-width: 40%;
+    max-width: 750px;
     margin: 15px auto;
     text-align: center;
     box-sizing: border-box;
@@ -88,9 +88,23 @@ button:hover{
     resize: none;
     border: 1px solid #4BAB94;
     border-radius: 15px;
-    min-width: 200px;
+    min-width: 50%;
     width: 20%;
     max-width: 600px;
     height: 1em;
     padding: 10px;
+}
+
+@media screen and (max-width: 800px){
+    .search-tab{
+        width: 100%;
+        max-width: 100%
+    }
+    #pages-lista{
+        padding: 5px;
+        border-radius: 15px;
+        max-width: 100%;
+        margin: 5px auto;
+        box-sizing: border-box;
+    }
 }
