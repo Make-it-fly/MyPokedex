@@ -30,7 +30,7 @@ async function getPokemonDataPerName(){
     const $textArea = document.querySelector('.pokemon-search');
     if($textArea.value != ''){
         $pokedex.innerHTML = '';
-        const url = `https://pokeapi.co/api/v2/pokemon/${$textArea.value}`;
+        const url = `https://pokeapi.co/api/v2/pokemon/${$textArea.value.toLowerCase()}`;
         const dados = await getApiData(url)
             .then(result => getPokemonDataPerName_SuccessResult(result))
             .catch(()=>getPokemonDataPerName_ErrorResult($textArea.value))
