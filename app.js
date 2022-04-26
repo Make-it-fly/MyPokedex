@@ -5,7 +5,7 @@ function mostrarTarget(){
     })
 }
 /* mostrarTarget(); */
-
+console.log('teste \n teste')
 
 let actualPages = 1; 
 let nroPerPage = 5;
@@ -17,26 +17,45 @@ async function getApiData(url){
 }
 
 async function getPokemonsDataPerPage(actualPages, nroPerPage){
-    const promisesArray = []
-    insertPromisesIntoArray(promisesArray, actualPages, nroPerPage);
+    const promisesArray = insertPromisesIntoArray(actualPages, nroPerPage);
     const dadosPokemons = await Promise.all(promisesArray)
     criaHTML(dadosPokemons);
 }
-function insertPromisesIntoArray(promisesArray, actualPages, nroPerPage){
+function insertPromisesIntoArray(actualPages, nroPerPage){
     let offset = ((actualPages * nroPerPage) - nroPerPage)
+    const promisesArray = []    
     for (let i = offset; i < (actualPages * nroPerPage); i++) {
         const promiseNumber = getApiData(`https://pokeapi.co/api/v2/pokemon/${(i + 1)}`);
         promisesArray.push(promiseNumber)
     }
+    return promisesArray;
 }
-/* async function getPokemonDataPerName(){
+async function getPokemonDataPerName(){
+    const $pokedex = document.querySelector('[data-js="pokedex"]');
     const $textArea = document.querySelector('.pokemon-search');
-    const $textAreaText = $textArea.value;
-    const url = `https://pokeapi.co/api/v2/pokemon/${$textAreaText}`;
-    const dados = await getApiData(url);
+    if($textArea.value != ''){
+        $pokedex.innerHTML = '';
+        const url = `https://pokeapi.co/api/v2/pokemon/${$textArea.value}`;
+        const dados = await getApiData(url)
+            .then(result => getPokemonDataPerName_SuccessResult(result))
+            .catch(()=>getPokemonDataPerName_ErrorResult($textArea.value))
+        console.log(dados)
+    }
 }
+function getPokemonDataPerName_SuccessResult(result){
+    const $errorScreen = document.getElementById("pokemon-name-error-screen");
+    $errorScreen.style = 'display: none';
+    criaHTML([result])
+}
+function getPokemonDataPerName_ErrorResult(textAreaValor){
+    const $pokedex = document.querySelector('[data-js="pokedex"]');
+    const $errorScreen = document.getElementById("pokemon-name-error-screen");
+    const $errorSpan = document.getElementById('pokemon-wrong-name');
 
-getPokemonDataPerName() */
+    $pokedex.innerHTML = '';
+    $errorScreen.style = 'display: block';
+    $errorSpan.textContent = `"${textAreaValor}"`;
+}
 
 function criaHTML(dadosPokemons){
     const $pokedex = document.querySelector('[data-js="pokedex"]')
@@ -67,15 +86,36 @@ function getPokemonTypes(types) {
 
 await getPokemonsDataPerPage(actualPages,nroPerPage);
 applyButtonsEvent()
-// :: Config dos Botões para mudar de página ::
+
+
+// :: Config dos Botões ::
 
 function applyButtonsEvent(){
-    const $AllButtonsContainer = document.querySelectorAll('.buttons-container');
-    for (let i = 0; i < $AllButtonsContainer.length; i++) {
-        const element = $AllButtonsContainer[i];
+    const $ButtonsContainer = document.querySelectorAll('.buttons-container');
+    const $resetBtn = document.getElementById('reset-btn');
+    const $searchBtn = document.querySelector('.search-btn');
+    const $homeBtn = document.querySelector('.home-btn')
+    const $textArea = document.querySelector('.pokemon-search');
+
+    for (let i = 0; i < $ButtonsContainer.length; i++) {
+        const element = $ButtonsContainer[i];
         element.addEventListener('click', resolveNavClickEvent);
     }
-}   
+    $resetBtn.addEventListener('click', resetPage)
+    $searchBtn.addEventListener('click', getPokemonDataPerName)
+    $homeBtn.addEventListener('click', resetPage)
+    $textArea.addEventListener('keypress',(e)=>{(e.keyCode == 13)?getPokemonDataPerName():()=>{}})
+    $textArea.addEventListener('input', (e)=>{$textArea.value = $textArea.value.replace(/\n/g,'')})
+}
+   
+function resetPage(){
+    const $errorScreen = document.getElementById('pokemon-name-error-screen')
+    const $textArea = document.querySelector('.pokemon-search');
+    $errorScreen.style = 'display: none'
+    $textArea.value = '';
+    getPokemonsDataPerPage(actualPages, nroPerPage)
+}
+
 function resolveNavClickEvent(e){
     const classArrowBtn = e.target.classList[0];
     const avancarOrRecuar = e.target.classList[1];

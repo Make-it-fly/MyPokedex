@@ -32,6 +32,11 @@ button:hover{
     max-width: 750px;
     margin: 15px auto;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    position: relative;
 }
 .pages-lista .element-page-style{
     border: #4BAB94 2px solid;
@@ -43,7 +48,6 @@ button:hover{
     border-radius: 15px;
     width: 25px;
     height: 25px;
-    margin: 5px auto;
     cursor: pointer;
 }
 .pages-lista span:hover{
@@ -65,26 +69,23 @@ button:hover{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 5px;
 }
-.search-tab i{
-    font-size: 26px;
-    color: #4BAB94;
-}
-.search-btn{
+.search-tab button{
     border: 1px solid #4BAB94;
     border-radius: 15px;
     background-color: #4BAB94;
     color: white;
-    font-size: 1.1em;
-    padding: 5px 15px;
+    font-size: 1em;
+    padding: 5px 10px;
     transition: .3s;
 }
-.search-btn:hover{
+.search-tab button:hover{
     background-color: #FFFFFF;
     color: #4BAB94;
 }
 .search-tab textarea{
+    white-space: nowrap;
     flex-grow: 1;
     resize: none;
     border: 1px solid #4BAB94;
@@ -94,6 +95,32 @@ button:hover{
     height: 1em;
     padding: 10px;
     overflow: hidden;
+    margin-right: 5px;
+}
+
+#pokemon-name-error-screen{
+	width: 80%;
+	margin: 15px auto;
+	text-justify: auto;
+	background-color: white;
+	color: #222;
+	padding: 15px;
+	border-radius: 15px;
+	border: 5px solid #4BAB94;
+}
+#pokemon-name-error-screen button{
+	display: block;
+	margin: 5px auto;
+    border: 1px solid #4BAB94;
+    border-radius: 15px;
+    background-color: #4BAB94;
+    color: white;
+    font-size: 1.1em;
+    padding: 5px 15px;
+    transition: .3s;
+}
+#pokemon-name-error-screen p span{
+    color: red;
 }
 
 @media screen and (max-width: 800px){

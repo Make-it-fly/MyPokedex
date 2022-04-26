@@ -16,7 +16,7 @@
       <button class="arrow-btn recuar"> <i class="fa-solid fa-arrow-left"></i> </button=>
       <button class="arrow-btn avancar"> <i class="fa-solid fa-arrow-right"></i> </button> 
       <nav class="pages-lista">
-        <snavan id="first-page" class="element-page-style">1</snavan>
+        <span id="first-page" class="element-page-style">1</span>
         <span>...</span>
         <span id="page-btn-1" class="element-page-style actual-page">1</span>
         <span id="page-btn-2" class="element-page-style">0</span>
@@ -28,11 +28,15 @@
       </nav>
     </div>
     <div class="search-tab">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <textarea placeholder="Pesquise seu pokemon!" class="pokemon-search"></textarea>
-      <button class="search-btn">Procurar</button>
+      <textarea wrap="off" placeholder="Pesquise seu pokemon!" class="pokemon-search" ></textarea>
+      <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <button class="home-btn"> <i class="fa-solid fa-house"></i> </button>
     </div>
     <ul data-js="pokedex" class="pokedex"></ul>
+    <div id="pokemon-name-error-screen" style="display: none">
+      <p>O resultado <span id="pokemon-wrong-name">XXXXX</span> não foi encontrado. Tente revisar os caracteres ou escreva o nome do Pokemon em inglês!</p>
+      <button id="reset-btn">Retornar</button>
+  </div>
     <div class="buttons-container">
       <button class="arrow-btn recuar"> <i class="fa-solid fa-arrow-left"></i> </button=>
       <button class="arrow-btn avancar"> <i class="fa-solid fa-arrow-right"></i> </button> 
