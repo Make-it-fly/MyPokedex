@@ -6,7 +6,7 @@ i{
     margin: 15px auto;
     text-align: center;
 }
-.up-btn{
+.arrow-btn{
     margin: 0 7px;
     border: #FFFFFF 3px solid;
     height: 70px;
@@ -93,6 +93,7 @@ button:hover{
     max-width: 400px;
     height: 1em;
     padding: 10px;
+    overflow: hidden;
 }
 
 @media screen and (max-width: 800px){

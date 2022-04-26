@@ -60,12 +60,19 @@ applyButtonsEvent()
 // :: Config dos Botões para mudar de página ::
 
 function applyButtonsEvent(){
-    const $buttonsContainer = document.querySelector('.buttons-container'); 
-    $buttonsContainer.addEventListener('click', resolveNavClickEvent);
+    const $AllButtonsContainer = document.querySelectorAll('.buttons-container');
+    for (let i = 0; i < $AllButtonsContainer.length; i++) {
+        const element = $AllButtonsContainer[i];
+        element.addEventListener('click', resolveNavClickEvent);
+    }
 }   
 function resolveNavClickEvent(e){
-    if(e.target.classList[0] == 'btn'){
+    if(e.target.classList[0] == 'arrow-btn'){
         alteratePageNumberValues(e.target.classList[1])
+        console.log(window.pageYOffset)
+        if(window.pageYOffset > 500){
+            window.scrollTo(0, 0)
+        }
     }
 }
 async function alteratePageNumberValues(classType){
