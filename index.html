@@ -2,16 +2,19 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>PokeDex</title>
-  <link rel="stylesheet" href="./style.css" />
-  <link rel="stylesheet" href="./indicators.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MakenPokedex</title>
+
+  <link rel="icon" href="./imgs/pokeball_icon.png" >
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/indicators.css" />
   <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
+
 </head>
 <body>
 
   <div class="container">
-    <h1>Pokedex</h1>
+    <h1 class="page-h1-title">Make it fly! Pokedex</h1>
     <div class="buttons-container">
       <button class="arrow-btn recuar"> <i class="fa-solid fa-arrow-left"></i> </button=>
       <button class="arrow-btn avancar"> <i class="fa-solid fa-arrow-right"></i> </button> 
@@ -28,9 +31,9 @@
       </nav>
     </div>
     <div class="search-tab">
+      <button class="home-btn"> <i class="fa-solid fa-house"></i> </button>
       <textarea wrap="off" placeholder="Pesquise seu pokemon!" class="pokemon-search" ></textarea>
       <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-      <button class="home-btn"> <i class="fa-solid fa-house"></i> </button>
     </div>
     <ul data-js="pokedex" class="pokedex"></ul>
     <div id="pokemon-name-error-screen" style="display: none">
@@ -43,7 +46,8 @@
     </div>
   </div>
   
-  <script src="./app.js" type="module"></script>
+  <!-- <script src="./pages.js" type="module"></script> -->
+  <script src="./js/app.js" type="module"></script>
   <script src="https://kit.fontawesome.com/0672e7305c.js" crossorigin="anonymous"></script>
 </body>
 </html>

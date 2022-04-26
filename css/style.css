@@ -11,9 +11,11 @@ body {
 	margin: 0 auto;
 }
 
-h1 {
+.page-h1-title{
 	text-align: center;
 	font-size: 54px;
+	border-radius: 15px;
+	color: white;
 }
 
 .pokedex {

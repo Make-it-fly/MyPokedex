@@ -1,7 +1,9 @@
 i{
     pointer-events: none;
 }
-
+button:hover{
+    cursor: pointer;
+}
 .buttons-container{
     margin: 15px auto;
     text-align: center;
@@ -18,10 +20,9 @@ i{
     font-size: 2em;
     transition: .2s;
 }
-button:hover{
+.arrow-btn:hover{
     background-color: #4BAB94;
     color: white;
-    cursor: pointer;
 }
 
 .pages-lista{
@@ -48,9 +49,10 @@ button:hover{
     border-radius: 15px;
     width: 25px;
     height: 25px;
+    user-select: none;
     cursor: pointer;
 }
-.pages-lista span:hover{
+.pages-lista .element-page-style:hover{
     background-color: #c6fff2;
 }
 .pages-lista .actual-page{
@@ -95,7 +97,7 @@ button:hover{
     height: 1em;
     padding: 10px;
     overflow: hidden;
-    margin-right: 5px;
+    margin: 0 5px;
 }
 
 #pokemon-name-error-screen{

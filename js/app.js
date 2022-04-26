@@ -1,14 +1,8 @@
-//APAGAR - FUNÇÕES DE TESTE
-function mostrarTarget(){
-    window.addEventListener('click',(e)=>{
-        console.log(e.target);
-    })
-}
-/* mostrarTarget(); */
-console.log('teste \n teste')
+/* import {returnPageData} from './pages.js' */
 
 let actualPages = 1; 
-let nroPerPage = 5;
+let nroPerPage = 30;
+const lastPage = 29;
 
 async function getApiData(url){
     let response = await fetch(url);
@@ -19,6 +13,7 @@ async function getApiData(url){
 async function getPokemonsDataPerPage(actualPages, nroPerPage){
     const promisesArray = insertPromisesIntoArray(actualPages, nroPerPage);
     const dadosPokemons = await Promise.all(promisesArray)
+    console.log(dadosPokemons)
     criaHTML(dadosPokemons);
 }
 function insertPromisesIntoArray(actualPages, nroPerPage){
@@ -39,7 +34,6 @@ async function getPokemonDataPerName(){
         const dados = await getApiData(url)
             .then(result => getPokemonDataPerName_SuccessResult(result))
             .catch(()=>getPokemonDataPerName_ErrorResult($textArea.value))
-        console.log(dados)
     }
 }
 function getPokemonDataPerName_SuccessResult(result){
@@ -65,6 +59,7 @@ function criaHTML(dadosPokemons){
 }
 
 function preencheHTML(pokemon){
+    atualizarValoresBtn();
     const types = getPokemonTypes(pokemon.types);
     
     const liTemplate =
@@ -84,8 +79,14 @@ function getPokemonTypes(types) {
     })
 }
 
-await getPokemonsDataPerPage(actualPages,nroPerPage);
-applyButtonsEvent()
+function resetPage(){
+    const $errorScreen = document.getElementById('pokemon-name-error-screen')
+    const $textArea = document.querySelector('.pokemon-search');
+    $errorScreen.style = 'display: none'
+    $textArea.value = '';
+    getPokemonsDataPerPage(actualPages, nroPerPage)
+}
+
 
 
 // :: Config dos Botões ::
@@ -96,26 +97,19 @@ function applyButtonsEvent(){
     const $searchBtn = document.querySelector('.search-btn');
     const $homeBtn = document.querySelector('.home-btn')
     const $textArea = document.querySelector('.pokemon-search');
+    const $pagesLista = document.querySelector(".pages-lista")
 
     for (let i = 0; i < $ButtonsContainer.length; i++) {
         const element = $ButtonsContainer[i];
-        element.addEventListener('click', resolveNavClickEvent);
-    }
+        element.addEventListener('click', resolveNavClickEvent);}
     $resetBtn.addEventListener('click', resetPage)
     $searchBtn.addEventListener('click', getPokemonDataPerName)
     $homeBtn.addEventListener('click', resetPage)
     $textArea.addEventListener('keypress',(e)=>{(e.keyCode == 13)?getPokemonDataPerName():()=>{}})
     $textArea.addEventListener('input', (e)=>{$textArea.value = $textArea.value.replace(/\n/g,'')})
+    $pagesLista.addEventListener('click',navegarValoresBtn)
 }
    
-function resetPage(){
-    const $errorScreen = document.getElementById('pokemon-name-error-screen')
-    const $textArea = document.querySelector('.pokemon-search');
-    $errorScreen.style = 'display: none'
-    $textArea.value = '';
-    getPokemonsDataPerPage(actualPages, nroPerPage)
-}
-
 function resolveNavClickEvent(e){
     const classArrowBtn = e.target.classList[0];
     const avancarOrRecuar = e.target.classList[1];
@@ -128,7 +122,7 @@ function resolveNavClickEvent(e){
     }
 }
 async function alteratePageNumberValues(classType){
-    if(classType == 'avancar' && (actualPages * nroPerPage) <= 1126){
+    if(classType == 'avancar' && !(actualPages == lastPage)){
         actualPages += 1;
         await getPokemonsDataPerPage(actualPages,nroPerPage);
     }
@@ -140,59 +134,60 @@ async function alteratePageNumberValues(classType){
 
 // :: Config da lista de pags ::
 
-//definindo cada botão e nav
-/* const $navPageBtns = document.getElementById('pages-lista')
+function atualizarValoresBtn(){
+    const $firstPageBtn = document.getElementById("first-page")
+    const $lastPageBtn = document.getElementById("last-page")
+    const $pageBtn1 = document.getElementById("page-btn-1")
+    const $pageBtn2 = document.getElementById("page-btn-2")
+    const $pageBtn3 = document.getElementById("page-btn-3")
+    const $pageBtn4 = document.getElementById("page-btn-4")
+    const $pageBtn5 = document.getElementById("page-btn-5")
+    let pagesArray = [$pageBtn1, $pageBtn2, $pageBtn3, $pageBtn4, $pageBtn5]
+    
+    $firstPageBtn.innerHTML = 1;
+    $lastPageBtn.innerHTML = lastPage;
 
-const $firstPage = document.getElementById('first-page');
-const $lastPage = document.getElementById('last-page');
-
-const $actualPage = document.getElementById('actual-page');
-const $2PageBack = document.getElementById('2-page-back');
-const $1PageBack = document.getElementById('1-page-back');
-const $1PageFront = document.getElementById('1-page-front');
-const $2PageFront = document.getElementById('2-page-front');
-
-$actualPage.innerText = actualPages;
-
-$navPageBtns.addEventListener('click', navegarValoresBtn)
-
-const atualizarValoresBtn = () => {
-    $actualPage.innerText = actualPages;
-
-    if(actualPages >= 3){
-        $2PageBack.style.display = 'inline-flex'
-        $2PageBack.innerText = actualPages -2
-    } else {
-        $2PageBack.style.display = 'none'
+    if(actualPages <= 3){
+        for (let i = 0; i < pagesArray.length; i++) {
+            pagesArray[i].innerText = i+1
+            pagesArray[i].classList.remove('actual-page')
+        }
+        if(actualPages == 1){
+            $pageBtn1.classList.add('actual-page')
+        } else if (actualPages == 2){
+            $pageBtn2.classList.add('actual-page')
+        } else {
+            $pageBtn3.classList.add('actual-page')
+        }
     }
-    if(actualPages >= 2){
-        $1PageBack.style.display = 'inline-flex'
-        $1PageBack.innerText = actualPages -1
-    } else {
-        $1PageBack.style.display = 'none'
+    if(actualPages < (lastPage - 2) && actualPages > 3){
+        for (let i = 0; i < pagesArray.length; i++) {
+            pagesArray[i].innerText = (actualPages + (i - 2))
+            pagesArray[i].classList.remove('actual-page')
+        }
+        $pageBtn3.classList.add('actual-page')
     }
-    if(actualPages <= 14){
-        $1PageFront.style.display = 'inline-flex'
-        $1PageFront.innerText = actualPages +1
-    } else {
-        $1PageFront.style.display = 'none'
+    if(actualPages >= (lastPage - 2)){
+        for (let i = 0; i < pagesArray.length; i++) {
+            pagesArray[i].innerText = (i - 4) + lastPage;
+            pagesArray[i].classList.remove('actual-page')
+        }
+        if(actualPages == 27){
+            $pageBtn3.classList.add('actual-page')
+        } else if (actualPages == 28){
+            $pageBtn4.classList.add('actual-page')
+        } else {
+            $pageBtn5.classList.add('actual-page')
+        }
     }
-    if(actualPages <= 13){
-        $2PageFront.style.display = 'inline-flex'
-        $2PageFront.innerText = actualPages +2
-    } else {
-        $2PageFront.style.display = 'none'
-    }
-
 }
 function navegarValoresBtn(e){
     var target = e.target;
-    console.log(target)
-    if(target.className == "element-page-style"){
+    if(target.classList[0] == "element-page-style"){
         actualPages = parseInt(target.innerText);
     }
-    atualizarValoresBtn();
-    applyDataOnPage();
+    getPokemonsDataPerPage(actualPages,nroPerPage);
 }
-
-atualizarValoresBtn(); */
+applyButtonsEvent()
+atualizarValoresBtn()
+await getPokemonsDataPerPage(actualPages,nroPerPage);
