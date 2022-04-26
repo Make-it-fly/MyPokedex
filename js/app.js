@@ -80,6 +80,7 @@ function getPokemonTypes(types) {
 }
 
 function resetPage(){
+    actualPages = 1;
     const $errorScreen = document.getElementById('pokemon-name-error-screen')
     const $textArea = document.querySelector('.pokemon-search');
     $errorScreen.style = 'display: none'
