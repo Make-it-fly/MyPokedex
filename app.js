@@ -6,7 +6,7 @@
 // transformar os dados da variavel em HTML
 
 let actualPages = 1; 
-let nroPerPage = 150;
+let nroPerPage = 50;
 
 
 async function getApiData(url){

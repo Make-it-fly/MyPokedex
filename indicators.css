@@ -6,7 +6,7 @@ i{
     margin: 15px auto;
     text-align: center;
 }
-.btn{
+.up-btn{
     margin: 0 7px;
     border: #FFFFFF 3px solid;
     height: 70px;
@@ -24,7 +24,7 @@ button:hover{
     cursor: pointer;
 }
 
-#pages-lista{
+.pages-lista{
     color: #4BAB94;
     background-color: white;
     padding: 5px;
@@ -33,7 +33,7 @@ button:hover{
     margin: 15px auto;
     box-sizing: border-box;
 }
-#pages-lista .element-page-style{
+.pages-lista .element-page-style{
     border: #4BAB94 2px solid;
     color: #4BAB94;
     display: inline-flex;
@@ -46,10 +46,10 @@ button:hover{
     margin: 5px auto;
     cursor: pointer;
 }
-#pages-lista span:hover{
+.pages-lista span:hover{
     background-color: #c6fff2;
 }
-#pages-lista #actual-page{
+.pages-lista .actual-page{
     background-color: #4BAB94;
     color: white;
 }
@@ -85,22 +85,29 @@ button:hover{
     color: #4BAB94;
 }
 .search-tab textarea{
+    flex-grow: 1;
     resize: none;
     border: 1px solid #4BAB94;
     border-radius: 15px;
-    min-width: 50%;
-    width: 20%;
-    max-width: 600px;
+    min-width: 10%;
+    max-width: 400px;
     height: 1em;
     padding: 10px;
 }
 
 @media screen and (max-width: 800px){
+    .search-tab textarea{
+        height: 2em;
+    }
+    .search-tab textarea::placeholder{
+        text-decoration: none;
+    }
     .search-tab{
         width: 100%;
         max-width: 100%
+        
     }
-    #pages-lista{
+    .pages-lista{
         padding: 5px;
         border-radius: 15px;
         max-width: 100%;
