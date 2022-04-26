@@ -1,13 +1,14 @@
-// OK requisitar e tratar os dados da API
-// percorrer a array = nroperpage
-// guardo os dados percorridos em uma variavel
-// percorrer os dados da variavel
-// chama função que percorre o array de itens chamando a cada interação a função que cria lis 
-// transformar os dados da variavel em HTML
+//APAGAR - FUNÇÕES DE TESTE
+function mostrarTarget(){
+    window.addEventListener('click',(e)=>{
+        console.log(e.target);
+    })
+}
+/* mostrarTarget(); */
+
 
 let actualPages = 1; 
-let nroPerPage = 50;
-
+let nroPerPage = 5;
 
 async function getApiData(url){
     let response = await fetch(url);
@@ -15,34 +16,38 @@ async function getApiData(url){
     return dados;
 }
 
-const getPokemonsDataPerPage = async (actualPages, nroPerPage) => {
-    let limiteInferiorDaPagina = ((actualPages * nroPerPage) - nroPerPage)
-    /* let limiteSuperiorDaPagina = (actualPages * nroPerPage) */
-    const url = `https://pokeapi.co/api/v2/pokemon/?offset=${limiteInferiorDaPagina}&limit=${nroPerPage}`
-    const dados = await getApiData(url);
-    const promisesPokemons = dados.results.map( async (element)=>{
-        return await getApiData(element.url);
-    })
-    const dadosPokemons = await Promise.all(promisesPokemons)
+async function getPokemonsDataPerPage(actualPages, nroPerPage){
+    const promisesArray = []
+    insertPromisesIntoArray(promisesArray, actualPages, nroPerPage);
+    const dadosPokemons = await Promise.all(promisesArray)
     criaHTML(dadosPokemons);
 }
+function insertPromisesIntoArray(promisesArray, actualPages, nroPerPage){
+    let offset = ((actualPages * nroPerPage) - nroPerPage)
+    for (let i = offset; i < (actualPages * nroPerPage); i++) {
+        const promiseNumber = getApiData(`https://pokeapi.co/api/v2/pokemon/${(i + 1)}`);
+        promisesArray.push(promiseNumber)
+    }
+}
+/* async function getPokemonDataPerName(){
+    const $textArea = document.querySelector('.pokemon-search');
+    const $textAreaText = $textArea.value;
+    const url = `https://pokeapi.co/api/v2/pokemon/${$textAreaText}`;
+    const dados = await getApiData(url);
+}
+
+getPokemonDataPerName() */
 
 function criaHTML(dadosPokemons){
-    // cria a array de lis
-    const liArrays = dadosPokemons.map(elemento => preencheHTML(elemento))
     const $pokedex = document.querySelector('[data-js="pokedex"]')
-    $pokedex.innerHTML = liArrays.join('');
-
-}
-function getPokemonTypes(types){
-    return types.map((type)=>{
-        return type.type.name;
-    })
+    
+    const arrayDeLis = dadosPokemons.map(elemento => preencheHTML(elemento))
+    $pokedex.innerHTML = arrayDeLis.join('');
 }
 
 function preencheHTML(pokemon){
     const types = getPokemonTypes(pokemon.types);
-
+    
     const liTemplate =
     `
         <li class="card ${types[0]}">
@@ -50,9 +55,14 @@ function preencheHTML(pokemon){
         <h2 class="card-title">${pokemon.id}. ${pokemon.name}</h2>
         <p class="card-subtitle">${types.join(' | ')}</p>
         </li>
-     `
-    return liTemplate
-
+        `
+        return liTemplate
+        
+    }
+function getPokemonTypes(types) {
+    return types.map((type) => {
+        return type.type.name;
+    })
 }
 
 await getPokemonsDataPerPage(actualPages,nroPerPage);
@@ -67,9 +77,11 @@ function applyButtonsEvent(){
     }
 }   
 function resolveNavClickEvent(e){
-    if(e.target.classList[0] == 'arrow-btn'){
-        alteratePageNumberValues(e.target.classList[1])
-        console.log(window.pageYOffset)
+    const classArrowBtn = e.target.classList[0];
+    const avancarOrRecuar = e.target.classList[1];
+
+    if(classArrowBtn == 'arrow-btn'){
+        alteratePageNumberValues(avancarOrRecuar)
         if(window.pageYOffset > 500){
             window.scrollTo(0, 0)
         }
