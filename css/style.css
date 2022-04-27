@@ -23,15 +23,22 @@ body {
 	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 	grid-gap: 20px;
 	padding-inline-start: 0;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .card {
+	flex-grow: 1;
+	min-width: 250px;
+	max-width: 400px;
+	width: 10%;
 	list-style: none;
 	padding: 40px;
 	color: #222;
 	text-align: center;
 	border-radius: 20px;
 	position: relative;
+	margin: 0 auto;
 }
 
 .card::after {
