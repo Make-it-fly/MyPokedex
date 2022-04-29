@@ -25,7 +25,7 @@ function insertPromisesIntoArray(actualPages, nroPerPage){
     }
     return promisesArray;
 }
-async function getPokemonDataPerName(){
+/* async function getPokemonDataPerName(){
     const $pokedex = document.querySelector('[data-js="pokedex"]');
     const $textArea = document.querySelector('.pokemon-search');
     if($textArea.value != ''){
@@ -34,6 +34,12 @@ async function getPokemonDataPerName(){
         const dados = await getApiData(url)
             .then(result => getPokemonDataPerName_SuccessResult(result))
             .catch(()=>getPokemonDataPerName_ErrorResult($textArea.value))
+    }
+} */
+async function navigateToPokemonPage(){
+    const $textArea = document.querySelector('.pokemon-search');
+    if($textArea.value != ''){
+        window.location.href = `./description.html?pokemon=${$textArea.value.toLowerCase()}`;
     }
 }
 function getPokemonDataPerName_SuccessResult(result){
@@ -104,9 +110,9 @@ function applyButtonsEvent(){
         const element = $ButtonsContainer[i];
         element.addEventListener('click', resolveNavClickEvent);}
     $resetBtn.addEventListener('click', resetPage)
-    $searchBtn.addEventListener('click', getPokemonDataPerName)
+    $searchBtn.addEventListener('click', navigateToPokemonPage)
     $homeBtn.addEventListener('click', resetPage)
-    $textArea.addEventListener('keypress',(e)=>{(e.keyCode == 13)?getPokemonDataPerName():()=>{}})
+    $textArea.addEventListener('keypress',(e)=>{(e.keyCode == 13)?navigateToPokemonPage():()=>{}})
     $textArea.addEventListener('input', (e)=>{$textArea.value = $textArea.value.replace(/\n/g,'')})
     $pagesLista.addEventListener('click',navegarValoresBtn)
 }

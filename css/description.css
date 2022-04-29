@@ -25,24 +25,24 @@ body{
 .titleContainer{
     text-align: center;
     color: #666;
-    background-color: white;
-    padding: 5px;
+    background-color: #4BAB94;
+    padding: 10px;
     box-sizing: border-box;
     border-radius: 15px;
 }
 .titleContainer h1{
-    color: #4BAB94;
+    margin: 0;
+    color: white;
 	text-transform: capitalize;
-	margin-bottom: 0px;
 	font-size: 38px;
 	font-weight: normal;
 	position: relative;
 	z-index: 2;
     text-align: center;
+    font-weight: 600;
 }
 .titleContainer .typesDescription{
-    color: #4BAB94;
-    font-weight: 600;
+    color: white;
     text-transform: capitalize;
 }
 .imageContainer{
@@ -68,6 +68,9 @@ body{
     margin: 5px auto;
     z-index: 2;
 }
+.card-image:hover{
+    animation: bounce 0.5s linear;
+}
 .card{
     color: #666;
     text-transform: capitalize;
@@ -80,6 +83,7 @@ body{
     background-color: #4BAB94;
     border-radius: 15px;
     box-sizing: border-box;
+    margin-top: 0;
     padding: 10px;
     color: white;
 }
@@ -93,10 +97,11 @@ body{
     max-width: 600px;
     margin: 0 auto;
     text-align: center;
-    border: 1px solid #186150;
+    overflow: hidden;
+    border-radius: 10px;
 }
 .card table th{
-    background-color: #186150;
+    background-color: #4BAB94;
     color: white;
 }
 .card table th,td{
@@ -108,16 +113,93 @@ body{
 .card table tr:nth-child(odd){
     background-color: #d3d0d0;
 }
+.pokemonDescription{
+    text-align: justify;
+    min-height: 60px;
+    border: #4BAB94 solid 1px;
+    border-radius: 10px;
+    padding: 10px;
+}
+.miniCardsArea{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.miniCard{
+    flex-grow: 1;
+    min-width: 100px;
+    width: 30%;
+    background-color: white;
+    border-radius: 10px;
+}
+.miniTitle{
+    top: 5px;
+    left: 5px;
+    color: white;
+    background-color: #4BAB94;
+    padding: 5px;
+    text-align: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.miniContent{
+    padding: 5px;
+    text-align: center;
+    min-height: 30px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid #4BAB94;
+    border-top: none;
+    overflow-wrap: break-word;
+}
+.evoMiniTitle{
+    color: white;
+    background-color: #4BAB94;
+    padding: 5px;
+    text-align: center;
+    border-radius: 10px;
+}
+.evoMiniContent{
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.pokeMiniCard{
+    width: 33%;
+}
+.pokeMiniCard:hover{
+    animation: bounce 0.5s;
+}
+.pokeCardTitle{
+    background-color: #4BAB94;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: white;
+    padding: 5px;
+}
+.pokeCardContent{
+    background-color: white;
+    border: 1px solid #4BAB94;
+    border-top: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 
 
 
-
-
+.normal{
+    background-color: rgb(240, 240, 240);
+}
 .dark{
 	background-color: #c8c8d3;
 }
 .ghost {
-	background-color: #d5aaff;
+	background-color: #e9d3ff;
 }
 .steel {
 	background-color: #f4f4f4;
@@ -191,4 +273,25 @@ body{
 }
 .errorScreenContainer p span{
     color: red;
+}
+
+@media screen and (max-width: 800px){
+    .container{
+        padding: 5px;
+    }
+}
+@keyframes bounce {
+	20% {
+			transform: translateY(-6px);
+	}
+	40% {
+			transform: translateY(0px);
+	}
+
+	80% {
+			transform: translateY(-2px);
+	}
+	100% {
+			transform: translateY(0);
+	}
 }
