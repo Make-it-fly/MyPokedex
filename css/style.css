@@ -5,6 +5,9 @@ body {
 	margin: 0;
 	font-family: rubik;
 }
+a{
+	text-decoration: none;
+}
 
 .container {
 	padding: 40px;
@@ -130,6 +133,10 @@ body {
 	font-weight: normal;
 	position: relative;
 	z-index: 2;
+	
+}
+.card-title a{
+	color: #222;
 }
 
 .card-subtitle {

@@ -1,0 +1,194 @@
+body{
+	background: #EFEFBB;
+	background: linear-gradient(to right, rgb(197, 230, 236), rgb(239, 187, 230));
+	color: white;
+	margin: 0;
+	font-family: rubik;
+}
+.container {
+    padding: 40px;
+    padding-top: 0;
+	margin: 0 auto;
+    max-width: 900px;
+}
+.search-tab{
+    margin-top: 50px;
+}
+.bigFrame{
+    background-color: white;
+    color: #4BAB94;
+    border-radius: 15px;
+    min-height: 500px;
+    padding: 20px;
+    position: relative;
+}
+.titleContainer{
+    text-align: center;
+    color: #666;
+    background-color: white;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 15px;
+}
+.titleContainer h1{
+    color: #4BAB94;
+	text-transform: capitalize;
+	margin-bottom: 0px;
+	font-size: 38px;
+	font-weight: normal;
+	position: relative;
+	z-index: 2;
+    text-align: center;
+}
+.titleContainer .typesDescription{
+    color: #4BAB94;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.imageContainer{
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+.imageContainer::before{
+    position: absolute;
+    left: 32%;
+    top: 15%;
+    content: "";
+    width: 35%;
+    height: 65%;
+    border-radius: 100%;
+    background-color: white;
+    opacity: .7;
+	z-index: 1;
+}
+.card-image {
+    position: relative;
+    height: 200px;
+    margin: 5px auto;
+    z-index: 2;
+}
+.card{
+    color: #666;
+    text-transform: capitalize;
+    margin: 15px auto;
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px;
+}
+.card h1{
+    background-color: #4BAB94;
+    border-radius: 15px;
+    box-sizing: border-box;
+    padding: 10px;
+    color: white;
+}
+.card .elementTitle{
+    color: #4BAB94;
+    font-weight: 600;
+}
+.card table{
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #186150;
+}
+.card table th{
+    background-color: #186150;
+    color: white;
+}
+.card table th,td{
+    padding: 5px;
+}
+.card table tr{
+    background-color: white;
+}
+.card table tr:nth-child(odd){
+    background-color: #d3d0d0;
+}
+
+
+
+
+
+.dark{
+	background-color: #c8c8d3;
+}
+.ghost {
+	background-color: #d5aaff;
+}
+.steel {
+	background-color: #f4f4f4;
+}
+
+.fire {
+	background-color: #FDDFDF;
+}
+
+.grass {
+	background-color: #DEFDE0;
+}
+
+.electric {
+	background-color: #FCF7DE;
+}
+
+.water, .ice {
+	background-color: #DEF3FD;
+}
+
+.ground {
+	background-color: #f4e7da;
+}
+
+.rock {
+	background-color: #d5d5d4;
+}
+
+.fairy {
+	background-color: #fceaff;
+}
+
+.poison {
+	background-color: #98d7a5;
+}
+
+.bug {
+	background-color: #f8d5a3;
+}
+
+.dragon {
+	background-color: #97b3e6;
+}
+
+.psychic {
+	background-color: #eaeda1;
+}
+
+.flying {
+	background-color: #F5F5F5;
+}
+
+.fighting {
+	background-color: #E6E0D4;
+}
+
+.errorScreenContainer{
+    background-color: white;
+    color: red;
+    border: 3px solid #4BAB94;
+    border-radius: 15px;
+    min-height: 50px;
+    padding: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+
+}
+.errorScreenContainer{
+    color: #666;
+}
+.errorScreenContainer p span{
+    color: red;
+}
