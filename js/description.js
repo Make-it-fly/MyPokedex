@@ -116,48 +116,55 @@ async function criaHTML(pokemonData){
     `
 
 }
+async function checkIfPossibleEvolutionChain(evolutionChain){
+    
+}
 async function returnPokeCards(evolutionChain){
-    let arr = [];
-    const firstForm = 
+    if(evolutionChain.chain.evolves_to != 0){
+        let arr = [];
+        const firstForm = 
+            `
+            <h1>Evolution chain</h1>
+            <div class="evoMiniCard">
+                <div class="evoMiniTitle">1º Form</div>
+                <div class="evoMiniContent"> 
+                    ${await returnFirstPokeCard(evolutionChain.chain)}
+                </div>
+            </div>
+            `;
+        const secondForm =
         `
-        <h1>Evolution chain</h1>
         <div class="evoMiniCard">
-            <div class="evoMiniTitle">1º Form</div>
+            <div class="evoMiniTitle">2º Form</div>
             <div class="evoMiniContent"> 
-                ${await returnFirstPokeCard(evolutionChain.chain)}
+                ${await returnNextPokecards(evolutionChain.chain.evolves_to)}
             </div>
         </div>
         `;
-    const secondForm =
-    `
-    <div class="evoMiniCard">
-        <div class="evoMiniTitle">2º Form</div>
-        <div class="evoMiniContent"> 
-            ${await returnNextPokecards(evolutionChain.chain.evolves_to)}
+        
+        const thirdForm =
+        `
+        <div class="evoMiniCard">
+            <div class="evoMiniTitle">3º Form</div>
+            <div class="evoMiniContent"> 
+                ${await returnNextPokecards(evolutionChain.chain.evolves_to[0].evolves_to)}
+            </div>
         </div>
-    </div>
-    `;
-    
-    const thirdForm =
-    `
-    <div class="evoMiniCard">
-        <div class="evoMiniTitle">3º Form</div>
-        <div class="evoMiniContent"> 
-            ${await returnNextPokecards(evolutionChain.chain.evolves_to[0].evolves_to)}
-        </div>
-    </div>
-    `;
-    if(evolutionChain.chain.evolves_to.length > 0){
-        arr.push(firstForm)
+        `;
+        if(evolutionChain.chain.evolves_to.length > 0){
+            arr.push(firstForm)
+        }
+        if(evolutionChain.chain.evolves_to.length > 0){
+            arr.push(secondForm)
+        }
+        if(evolutionChain.chain.evolves_to[0].evolves_to.length > 0){
+            arr.push(thirdForm)
+        }
+        
+        return arr.join('')
+    } else {
+        return '';
     }
-    if(evolutionChain.chain.evolves_to.length > 0){
-        arr.push(secondForm)
-    }
-    if(evolutionChain.chain.evolves_to[0].evolves_to.length > 0){
-        arr.push(thirdForm)
-    }
-    
-    return arr.join('')
 }
 async function returnFirstPokeCard(actualEvolutionStage){
     const pokemon = await getApiData(`https://pokeapi.co/api/v2/pokemon/${actualEvolutionStage.species.name}`);
