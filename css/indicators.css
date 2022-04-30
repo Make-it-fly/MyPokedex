@@ -112,7 +112,19 @@ button:hover{
     color: #4BAB94;
     background-color: white;
 }
-
+.error-return-btn{
+    padding: 5px 15px 5px 15px;
+    border: 1px solid #4BAB94;
+    border-radius: 10px;
+    background-color: #4BAB94;
+    color: white;
+    font-size: 16px;
+    transition: .2s;
+}
+.error-return-btn:hover{
+    background-color: white;
+    color: #4BAB94;
+}
 #pokemon-name-error-screen{
 	width: 80%;
 	margin: 15px auto;

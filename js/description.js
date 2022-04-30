@@ -23,6 +23,7 @@ function giveError(){
     <div class="errorScreenContainer">
         <div class="errorScreen">
         <p>O resultado <span id="pokemon-wrong-name">"${pokemon}"</span> não foi encontrado. Tente revisar os caracteres ou escreva o nome do Pokemon em inglês!</p>
+        <button class="error-return-btn">Return</button>
         </div>
     </div>
     `
@@ -42,9 +43,9 @@ async function criaHTML(pokemonData){
     const generation = generationData.names[5].name.replace('Generation', '')
     const description = species.flavor_text_entries[0].flavor_text;
     
-    /* console.log(pokemonData); */
-        /* console.log(species); */
-            console.log(evolutionChain);
+    console.log(pokemonData);
+        console.log(species);
+            /* console.log(evolutionChain); */
             /* console.log(evolutions); */
 
     $pokemonDataArea.innerHTML = 
@@ -75,6 +76,10 @@ async function criaHTML(pokemonData){
             <div class="miniCard">
                 <div class="miniTitle">height</div>
                 <div class="miniContent">${pokemonData.height}</div>
+            </div>
+            <div class="miniCard">
+                <div class="miniTitle">Weight</div>
+                <div class="miniContent">${pokemonData.weight}</div>
             </div>
             <div class="miniCard">
                 <div class="miniTitle">Generation</div>
@@ -244,6 +249,8 @@ function applyButtonsEvent(){
     $textArea.addEventListener('keypress', searchAreaEnterPress)
     $homeBtn.addEventListener('click', returnToHomePage);
     $searchBtn.addEventListener('click', searchNewPokemon);
+    window.addEventListener('click', miniCardSearch)
+    window.addEventListener('click', errorBtnReturn)
 }
 
 function returnToHomePage(){
@@ -252,6 +259,17 @@ function returnToHomePage(){
 function searchNewPokemon(){
     if($textArea.value != ''){
         window.location.href = `./description.html?pokemon=${$textArea.value.toLowerCase()}`;
+    }
+}
+function miniCardSearch(e){
+    if(e.target.className == 'pokeMiniCard'){
+        console.log(e.target.children[0].innerHTML)
+        window.location.href = `./description.html?pokemon=${e.target.children[0].innerHTML}`;
+    }
+}
+function errorBtnReturn(e){
+    if(e.target.classList[0] == "error-return-btn"){
+        history.back();
     }
 }
 function searchAreaEnterPress(e){
