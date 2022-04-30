@@ -137,8 +137,26 @@ async function returnPokeCards(evolutionChain){
         </div>
     </div>
     `;
-    arr.push(firstForm)
-    arr.push(secondForm)
+    
+    const thirdForm =
+    `
+    <div class="evoMiniCard">
+        <div class="evoMiniTitle">3º Form</div>
+        <div class="evoMiniContent"> 
+            ${await returnNextPokecards(evolutionChain.chain.evolves_to[0].evolves_to)}
+        </div>
+    </div>
+    `;
+    if(evolutionChain.chain.evolves_to.length > 0){
+        arr.push(firstForm)
+    }
+    if(evolutionChain.chain.evolves_to.length > 0){
+        arr.push(secondForm)
+    }
+    if(evolutionChain.chain.evolves_to[0].evolves_to.length > 0){
+        arr.push(thirdForm)
+    }
+    
     return arr.join('')
 }
 async function returnFirstPokeCard(actualEvolutionStage){
@@ -157,7 +175,6 @@ async function returnNextPokecards(actualEvolutionStage){
     let arr = [];
     for (let i = 0; i < actualEvolutionStage.length; i++) {
         const pokemon = await getApiData(`https://pokeapi.co/api/v2/pokemon/${actualEvolutionStage[i].species.name}`);
-        console.log(pokemon)
         arr.push( 
             `
             <div class="pokeMiniCard">
