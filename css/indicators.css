@@ -99,6 +99,19 @@ button:hover{
     overflow: hidden;
     margin: 0 5px;
 }
+.go-to-pokemon-page-btn{
+    padding: 5px 15px 5px 15px;
+    border: 1px solid #4BAB94;
+    border-radius: 10px;
+    background-color: #4BAB94;
+    color: white;
+    font-size: 16px;
+    transition: .2s;
+}
+.go-to-pokemon-page-btn:hover{
+    color: #4BAB94;
+    background-color: white;
+}
 
 #pokemon-name-error-screen{
 	width: 80%;

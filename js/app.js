@@ -36,10 +36,16 @@ function insertPromisesIntoArray(actualPages, nroPerPage){
             .catch(()=>getPokemonDataPerName_ErrorResult($textArea.value))
     }
 } */
-async function navigateToPokemonPage(){
+function navigateToPokemonPageSearchTab(){
     const $textArea = document.querySelector('.pokemon-search');
     if($textArea.value != ''){
         window.location.href = `./description.html?pokemon=${$textArea.value.toLowerCase()}`;
+    }
+}
+function navigateToPokemonPageCardBtn(e){
+    if(e.target.classList[0] == 'go-to-pokemon-page-btn'){
+        const url = e.target.attributes.href.nodeValue;
+        window.location.href = `${url}`;
     }
 }
 function getPokemonDataPerName_SuccessResult(result){
@@ -74,6 +80,7 @@ function preencheHTML(pokemon){
         <img class="card-image" alt="${pokemon.name}" src="${pokemon.sprites.front_default}"/>
         <h2 class="card-title"><a href="./description.html?pokemon=${pokemon.name.toLowerCase()}">${pokemon.id}. ${pokemon.name}</a></h2>
         <p class="card-subtitle">${types.join(' | ')}</p>
+        <button href="./description.html?pokemon=${pokemon.name.toLowerCase()}" class="go-to-pokemon-page-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
         </li>
         `
         return liTemplate
@@ -110,11 +117,12 @@ function applyButtonsEvent(){
         const element = $ButtonsContainer[i];
         element.addEventListener('click', resolveNavClickEvent);}
     $resetBtn.addEventListener('click', resetPage)
-    $searchBtn.addEventListener('click', navigateToPokemonPage)
+    $searchBtn.addEventListener('click', navigateToPokemonPageSearchTab)
     $homeBtn.addEventListener('click', resetPage)
-    $textArea.addEventListener('keypress',(e)=>{(e.keyCode == 13)?navigateToPokemonPage():()=>{}})
+    $textArea.addEventListener('keypress',(e)=>{(e.keyCode == 13)?navigateToPokemonPageSearchTab():()=>{}})
     $textArea.addEventListener('input', (e)=>{$textArea.value = $textArea.value.replace(/\n/g,'')})
     $pagesLista.addEventListener('click',navegarValoresBtn)
+    window.addEventListener('click', navigateToPokemonPageCardBtn)
 }
    
 function resolveNavClickEvent(e){
