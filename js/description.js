@@ -91,17 +91,7 @@ async function criaHTML(pokemonData){
         </div>
         </div>
         <div class="evolution card">
-            <h1>Evolution chain</h1>
-            <div class="evoMiniCard">
-                <div class="evoMiniTitle">1º Form</div>
-                <div class="evoMiniContent">
-                    <div class="pokeMiniCard">
-                        <div class="pokeCardTitle">${pokemonData.name}</div>
-                        <div class="pokeCardContent">
-                        <img src="${pokemonData.sprites.front_default}">
-                        </div>
-                    </div>
-            </div> 
+           ${await returnPokeCards(evolutionChain)}
         </div>
         <div class="statsArea card">
             <h1>Stats</h1>
@@ -126,33 +116,60 @@ async function criaHTML(pokemonData){
     `
 
 }
-async function returnPokeCards(speciesArray){
-    /* console.log(speciesArray) */
-    /* const arr = await speciesArray.map(returnPokeCardHTML) */
-    const arr = [];
-    for (let i = 0; i < speciesArray.length; i++) {
-        const data = await returnPokeCardHTML(speciesArray[i])
-        arr.push(data)
-    }
-    return arr.join('');
-}
-async function returnPokeCardHTML(element){
-    const pokemonSpecie = await getApiData(element.species.url)
-    const pokemon = await getApiData(`https://pokeapi.co/api/v2/pokemon/${pokemonSpecie.id}`)
-   /*  console.log(element) */
-    /* console.log(pokemonSpecie) */
-    /* console.log(pokemon) */
-    const htmlContent = 
+async function returnPokeCards(evolutionChain){
+    let arr = [];
+    const firstForm = 
+        `
+        <h1>Evolution chain</h1>
+        <div class="evoMiniCard">
+            <div class="evoMiniTitle">1º Form</div>
+            <div class="evoMiniContent"> 
+                ${await returnFirstPokeCard(evolutionChain.chain)}
+            </div>
+        </div>
+        `;
+    const secondForm =
     `
-    <div class="pokeMiniCard">
-            <div class="pokeCardTitle">${pokemonSpecie.name}</div>
+    <div class="evoMiniCard">
+        <div class="evoMiniTitle">2º Form</div>
+        <div class="evoMiniContent"> 
+            ${await returnNextPokecards(evolutionChain.chain.evolves_to)}
+        </div>
+    </div>
+    `;
+    arr.push(firstForm)
+    arr.push(secondForm)
+    return arr.join('')
+}
+async function returnFirstPokeCard(actualEvolutionStage){
+    const pokemon = await getApiData(`https://pokeapi.co/api/v2/pokemon/${actualEvolutionStage.species.name}`);
+    /* console.log(pokemon) */
+    return `
+        <div class="pokeMiniCard">
+            <div class="pokeCardTitle">${pokemon.name}</div>
             <div class="pokeCardContent">
                 <img src="${pokemon.sprites.front_default}">
             </div>
-    </div>
-    `
-    ;
-    return htmlContent;
+        </div>
+        `
+}
+async function returnNextPokecards(actualEvolutionStage){
+    let arr = [];
+    for (let i = 0; i < actualEvolutionStage.length; i++) {
+        const pokemon = await getApiData(`https://pokeapi.co/api/v2/pokemon/${actualEvolutionStage[i].species.name}`);
+        console.log(pokemon)
+        arr.push( 
+            `
+            <div class="pokeMiniCard">
+                <div class="pokeCardTitle">${pokemon.name}</div>
+                <div class="pokeCardContent">
+                    <img src="${pokemon.sprites.front_default}">
+                </div>
+            </div>
+            `)
+        ;
+    }
+    return arr.join('');
 }
 function getPokemonGames(pokemonData){
     const array = pokemonData.game_indices.map(element => {
@@ -216,3 +233,5 @@ function searchNewPokemon(){
 function searchAreaEnterPress(e){
     (e.keyCode == 13)?searchNewPokemon():()=>{}
 }
+
+/*   */
